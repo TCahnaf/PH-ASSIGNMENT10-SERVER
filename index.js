@@ -62,66 +62,6 @@ async function run() {
       res.send(result)
      })
 
-     //backend API's for myBill collection
- 
-
-//add bill
-    app.post('/mybills', async (req,res) => {
-    const paidBillInfo = req.body;
-    const result = await myBills.insertOne(paidBillInfo);
-    res.send(result);
-   })
-
-
-
-   //retrieve user bills based on email
-   app.get('/mybills', async (req, res)=>{
-
-    const user_email = req.query.email;
-    const query = {};
-
-    if(user_email){
-      query.email = user_email
-
-    }
-
-    const cursor = myBills.find(query)
-    const result = await cursor.toArray();
-    res.send(result)
-
-   })
-
-  app.patch('/mybills/:id', async (req, res) => {
-
-    const id = req.params.id;
-    const updatedBillInfo = req.body;
-    const query = {_id: new ObjectId(id)}
-
-    const update = {
-      $set: {
-        Phone:updatedBillInfo.Phone,
-        Address: updatedBillInfo.Address,
-        amount: updatedBillInfo.amount,
-        date: updatedBillInfo.date
-      }
-    }
-
-    const result = await myBills.updateOne (query, update);
-    res.send(result)
-    
-  })
-
-
-  app.delete('/mybills/:id', async(req,res) => {
-
-    const id = req.params.id;
-    const query = {_id: new ObjectId(id)}
-    const result = await myBills.deleteOne(query);
-    res.send(result)
-
-
-  })
-
 
 
 
