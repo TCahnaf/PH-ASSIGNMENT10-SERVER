@@ -92,6 +92,26 @@ async function run() {
 
    })
 
+  app.patch('/mybills/:id', async (req, res) => {
+
+    const id = req.params.id;
+    const updatedBillInfo = req.body;
+    const query = {_id: new ObjectId(id)}
+
+    const update = {
+      $set: {
+        Phone:updatedBillInfo.Phone,
+        Address: updatedBillInfo.Address,
+        amount: updatedBillInfo.amount,
+        date: updatedBillInfo.date
+      }
+    }
+
+    const result = await myBills.updateOne (query, update);
+    res.send(result)
+    
+  })
+
 
 
 
